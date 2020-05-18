@@ -1,4 +1,7 @@
 # Nextjs-Example
+Learning Nextjs to build CV
+
+
 ## Getting Started
 
 First, run the development server:
