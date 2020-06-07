@@ -4,38 +4,10 @@ import SideMenu from '../components/UI/Sidemenu/Sidemenu'
 import Carousel from '../components/UI/Carousel/Carousel'
 import Movielist from '../components/UI/Movielist/Movielist'
 import Footer from '../components/UI/Footer/Footer'
+import { getMovies } from '../actions/index'
+import React, { useState, useEffect } from 'react'
+const Home = (props) => {
 
-const  MOVIE_DATA = [
-  {
-    id: 1,
-    name: 'Dukdui',
-    releaseYear: '2020',
-    description: 'Dukdui hate Pmee',
-    rating: 10.0,
-    genre: 'drama',
-    image: ''
-  },
-  {
-    id: 1,
-    name: 'Pmee go away',
-    releaseYear: '2020',
-    description: 'Pmee is homeless',
-    rating: 0.1,
-    genre: 'drama',
-    image: ''
-  },
-  {
-    id: 1,
-    name: 'Dukdui love Marui',
-    releaseYear: '2020',
-    description: 'Dukdui love Marui very much',
-    rating: 10.0,
-    genre: 'family',
-    image: ''
-  }
-]
-
-export default function Home() {
   return  (
   <div>
   <Head>
@@ -59,7 +31,7 @@ export default function Home() {
     <div className="col-lg-9">
       <Carousel />
       <div className="row">
-        <Movielist movies={MOVIE_DATA} />
+        <Movielist movies={props.movies} />
 
       </div>
     </div>
@@ -76,3 +48,10 @@ export default function Home() {
 </div>
 )
 }
+Home.getInitialProps = async () => {
+  const movies = await getMovies()
+  return {
+    movies
+  }
+}
+export default Home
