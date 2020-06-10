@@ -1,6 +1,6 @@
 const  MOVIE_DATA = [
     {
-      id: 0,
+      id: "1",
       name: 'Dukdui',
       releaseYear: '2020',
       description: 'Dukdui hate Pmee and he eat very much about 50 tons per day and sleep 50 hrs per day WTF!',
@@ -9,7 +9,7 @@ const  MOVIE_DATA = [
       image: 'https://www-tc.pbs.org/wnet/nature/files/2020/01/48874833297_17e87338bb_b.jpg'
     },
     {
-      id: 1,
+      id: "2",
       name: 'Pmee go away',
       releaseYear: '2020',
       description: 'Pmee is homeless and he eat very much about 50 tons per day and sleep 50 hrs per day WTF!',
@@ -18,7 +18,7 @@ const  MOVIE_DATA = [
       image: 'https://news.thaipbs.or.th/media/G0DL5oPyrtt5HBAi37NuFtflmnnP7Vsi6MAmcC2mlYUpkoCqUluDtx.jpg'
     },
     {
-      id: 2,
+      id: "3",
       name: 'Dukdui love Marui',
       releaseYear: '2020',
       description: 'Dukdui love Marui very much and he eat very much about 50 tons per day and sleep 50 hrs per day WTF!',
@@ -32,8 +32,20 @@ const  MOVIE_DATA = [
       return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(MOVIE_DATA)
-        }, 0)
+        }, 50)
       })
       //create async functionality
         
+  }
+
+  export const getMovieById = (id) => {
+
+    return new Promise((resolve, reject) => {
+        const movieIndex = MOVIE_DATA.findIndex((m) => {
+            return m.id === id
+        })
+
+        const movie = MOVIE_DATA[movieIndex]
+        setTimeout(() => resolve(movie), 50)
+    })
   }
