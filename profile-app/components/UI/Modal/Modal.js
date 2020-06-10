@@ -1,9 +1,9 @@
-const Modal = () => {
-    let closeButton = null
-    const submitModal = () => {
-        alert('Submitting modal')
-        closeButton.click()
-    }
+const Modal = (props) => {
+  let closeButton = null;
+  const submitModal = () => {
+    alert("Submitting modal");
+    closeButton.click();
+  };
   return (
     <div>
       <button
@@ -38,17 +38,23 @@ const Modal = () => {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className="modal-body">...</div>
+            <div className="modal-body">
+              {props.children}
+            </div>
             <div className="modal-footer">
               <button
-                ref={(ele) => closeButton = ele} 
+                ref={(ele) => (closeButton = ele)}
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
               >
                 Close
               </button>
-              <button onClick={submitModal} type="button" className="btn btn-primary">
+              <button
+                onClick={submitModal}
+                type="button"
+                className="btn btn-primary"
+              >
                 Save changes
               </button>
             </div>
