@@ -64,6 +64,17 @@ const  MOVIE_DATA = [
         
   }
 
+  export const createMovie = (movie) => {
+    return new Promise((resolve, reject) => {
+      MOVIE_DATA.push(movie)
+      setTimeout(() => {
+          resolve(MOVIE_DATA)
+      }, 50)
+    })
+    //create async functionality
+      
+}
+
   export const getMovieById = (id) => {
 
     return new Promise((resolve, reject) => {

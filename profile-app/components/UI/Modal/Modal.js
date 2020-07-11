@@ -38,9 +38,7 @@ const Modal = (props) => {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className="modal-body">
-              {props.children}
-            </div>
+            <div className="modal-body">{props.children}</div>
             <div className="modal-footer">
               <button
                 ref={(ele) => (closeButton = ele)}
@@ -50,13 +48,15 @@ const Modal = (props) => {
               >
                 Close
               </button>
-              <button
-                onClick={submitModal}
-                type="button"
-                className="btn btn-primary"
-              >
-                Save changes
-              </button>
+              { props.hasSubmit &&
+                <button
+                  onClick={submitModal}
+                  type="button"
+                  className="btn btn-primary"
+                >
+                  Save changes
+                </button>
+              }
             </div>
           </div>
         </div>
