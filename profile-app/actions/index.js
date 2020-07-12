@@ -66,6 +66,10 @@ const  MOVIE_DATA = [
 
   export const createMovie = (movie) => {
     return new Promise((resolve, reject) => {
+      //create ID for movie
+
+      movie.id = Math.random().toString(26).substr(2, 7)
+
       MOVIE_DATA.push(movie)
       setTimeout(() => {
           resolve(MOVIE_DATA)

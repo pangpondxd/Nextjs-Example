@@ -4,16 +4,18 @@ import MovieCreateForm from '../movieCreateForm/movieCreateForm'
 import { createMovie } from '../../../actions/index'
 const SideMenu = (props) => {
   const { categories } = props;
-
+  let modal = null
   const createMovieHandler = (movie) => {
     createMovie(movie).then((movies) => {
+      //close modal after create
       console.log(JSON.stringify(movies))
+      modal.closeModal()
     })
   }
 
   return (
     <div>
-      <Modal hasSubmit={false}>
+      <Modal ref={ele => modal = ele } hasSubmit={false}>
         <MovieCreateForm handleFormSubmit={createMovieHandler} />
       </Modal>
       <h1 className="my-4">{props.appName}</h1>
