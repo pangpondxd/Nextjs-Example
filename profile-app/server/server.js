@@ -12,6 +12,21 @@ app.prepare().then(() => {
     return res.json({ message: "Hello World" });
   });
 
+  server.post("/api/v1/movies", (req, res) => {
+    return res.json({ message: "Saving post" });
+  });
+
+  server.patch("/api/v1/movies/:id", (req, res) => {
+      const { id } = req.param
+
+    return res.json({ message: `Updating post of id: ${id}` });
+  });
+
+  server.delete("/api/v1/movies/:id", (req, res) => {
+    const { id } = req.param
+    return res.json({ message: `Deleting post of id: ${id}` });
+  });
+
   server.get("/faq", (req, res) => {
     return res.send(
       "<html><head></head><body><h1>Hello World</h1></body></html>"
