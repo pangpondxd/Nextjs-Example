@@ -44,7 +44,7 @@ const MovieCreateForm = (props) => {
     <form>
       <div className="form-group">
       {JSON.stringify(form)}
-        <label htmlFor="name">Name</label>
+        <label for="name">Name</label>
         <input
           value={form.name}
           name="name"
@@ -57,7 +57,7 @@ const MovieCreateForm = (props) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="description">Description</label>
+        <label for="description">Description</label>
         <input
           value={form.description}
           onChange={changedHandler}
@@ -69,7 +69,7 @@ const MovieCreateForm = (props) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="description">Rating</label>
+        <label for="description">Rating</label>
         <input
           value={form.rating}
           onChange={changedHandler}
@@ -86,7 +86,7 @@ const MovieCreateForm = (props) => {
         </small>
       </div>
       <div className="form-group">
-        <label htmlFor="image">Image</label>
+        <label for="image">Image</label>
         <input
           value={form.image}
           onChange={changedHandler}
@@ -98,7 +98,7 @@ const MovieCreateForm = (props) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="cover">Cover</label>
+        <label for="cover">Cover</label>
         <input
           form={form.cover}
           onChange={changedHandler}
@@ -110,7 +110,7 @@ const MovieCreateForm = (props) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="longDesc">Long Description</label>
+        <label for="longDesc">Long Description</label>
         <textarea
           value={form.longDesc}
           onChange={changedHandler}
@@ -121,7 +121,7 @@ const MovieCreateForm = (props) => {
         ></textarea>
       </div>
       <div className="form-group">
-        <label htmlFor="genre">Genre</label>
+        <label for="genre">Genre</label>
         <select
           onChange={changedGenreHandler}
           multiple

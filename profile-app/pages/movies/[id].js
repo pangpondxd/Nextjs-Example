@@ -8,7 +8,7 @@ const Movie = (props) => {
   return (
     <div className="container">
       <div className="jumbotron">
-        <img src={movie.image} width="100%" />
+        <img src={movie.image} />
         <h1 className="display-4">{movie.name}</h1>
         <p className="lead">
           {movie.description}
