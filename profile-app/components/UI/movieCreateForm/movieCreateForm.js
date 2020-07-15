@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import {getPictureMovie} from '../../../actions/index'
 const MovieCreateForm = (props) => {
   //fixed uncontrolled data!
   const [form, setForm] = useState({
@@ -11,12 +11,22 @@ const MovieCreateForm = (props) => {
     longDesc: ""
   });
 
+
+  const changedImageHandler = (event) => {
+    const target = event.target;
+    const name = target.name;
+    setForm({
+      ...form,
+      [name]: target.value
+    });
+  }
+
   const changedHandler = (event) => {
     const target = event.target;
     const name = target.name;
     setForm({
       ...form,
-      [name]: target.value,
+      [name]: target.value
     });
   };
 
@@ -44,7 +54,7 @@ const MovieCreateForm = (props) => {
     <form>
       <div className="form-group">
       {JSON.stringify(form)}
-        <label for="name">Name</label>
+        <label htmlFor="name">Name</label>
         <input
           value={form.name}
           name="name"
@@ -57,7 +67,7 @@ const MovieCreateForm = (props) => {
         />
       </div>
       <div className="form-group">
-        <label for="description">Description</label>
+        <label htmlFor="description">Description</label>
         <input
           value={form.description}
           onChange={changedHandler}
@@ -69,7 +79,7 @@ const MovieCreateForm = (props) => {
         />
       </div>
       <div className="form-group">
-        <label for="description">Rating</label>
+        <label htmlFor="description">Rating</label>
         <input
           value={form.rating}
           onChange={changedHandler}
@@ -86,31 +96,31 @@ const MovieCreateForm = (props) => {
         </small>
       </div>
       <div className="form-group">
-        <label for="image">Image</label>
+        <label htmlFor="image">Image</label>
         <input
           value={form.image}
-          onChange={changedHandler}
+          onChange={() => changedImageHandler()}
           name="image"
-          type="text"
+          type="file"
           className="form-control"
           id="image"
           placeholder="http://....."
         />
       </div>
       <div className="form-group">
-        <label for="cover">Cover</label>
+        <label htmlFor="cover">Cover</label>
         <input
-          form={form.cover}
-          onChange={changedHandler}
+          value={form.cover}
+          onChange={() => changedImageHandler()}
           name="cover"
-          type="text"
+          type="file"
           className="form-control"
           id="cover"
           placeholder="http://......"
         />
       </div>
       <div className="form-group">
-        <label for="longDesc">Long Description</label>
+        <label htmlFor="longDesc">Long Description</label>
         <textarea
           value={form.longDesc}
           onChange={changedHandler}
@@ -121,7 +131,7 @@ const MovieCreateForm = (props) => {
         ></textarea>
       </div>
       <div className="form-group">
-        <label for="genre">Genre</label>
+        <label htmlFor="genre">Genre</label>
         <select
           onChange={changedGenreHandler}
           multiple

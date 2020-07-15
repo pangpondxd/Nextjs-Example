@@ -22,6 +22,10 @@ import axios from 'axios'
     })
   }
 
+  export const getPictureMovie = () => {
+    return axios.get(`${BASE_URL}/api/v1/upload`).then(res => res.data)
+  }
+
   export const getMovies = () => {
       // return new Promise((resolve, reject) => {
       //   setTimeout(() => {
