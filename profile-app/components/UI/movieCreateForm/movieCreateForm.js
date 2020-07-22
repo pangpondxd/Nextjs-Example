@@ -1,24 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 const MovieCreateForm = (props) => {
   //fixed uncontrolled data!
   const [form, setForm] = useState({
     name: "",
     description: "",
     rating: "",
+    image: "",
     longDesc: "",
   });
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState("");
 
   const changedImageHandler = async (event) => {
     const target = event.target;
-    console.log("target = = = = = = =",target)
+    console.log("target = = = = = = =", target);
     const name = target.name;
     const files = target.files[0];
     const data = new FormData();
     data.append("file", files);
     data.append("upload_preset", "movieDB");
-    console.log("data ; ; ; ;", data)
+    console.log("data ; ; ; ;", files);
     setLoading(true);
 
     const res = await fetch(
@@ -29,14 +31,10 @@ const MovieCreateForm = (props) => {
       }
     );
     const file = await res.json();
-    console.log("file.url", file.url)
-    setImage(file.secure_url)
-    setLoading(false)
-    console.log("target ; ; ; ; ; ; ; ", )
-    setForm({
-      [name]: target.value,
-      image: target.value,
-    });
+    console.log("file.url", file.url);
+    setImage(file.secure_url);
+    setLoading(false);
+    console.log("target ; ; ; ; ; ; ; ");
   };
 
   const changedCoverHandler = async (e) => {
@@ -56,21 +54,24 @@ const MovieCreateForm = (props) => {
       }
     );
     const file = await res.json();
-    let cover = target.cover
-    cover = file.url
-    console.log(cover)
+    let cover = target.cover;
+    cover = file.url;
+    console.log(cover);
     setForm({
-      [name]: target.value,
+      ...form,
       cover: target.value,
     });
   };
 
   const changedHandler = (event) => {
-    const target = event.target;
-    const name = target.name;
+    let target = event.target;
+    let name = target.name;
     setForm({
+      ...form,
       [name]: target.value,
     });
+
+    console.log("target.value", target.value);
   };
 
   const changedGenreHandler = (event) => {
@@ -83,27 +84,26 @@ const MovieCreateForm = (props) => {
       }
     }
     setForm({
+      ...form,
       genre: value.toString(),
     });
   };
 
-  const submitForm = () => {
+  const submitForm = (e) => {
     // call here function to create movie from props
-    props.handleFormSubmit({...form});
+    e.preventDefault();
+    props.handleFormSubmit({ ...form });
   };
 
   return (
-    <form>
+    <form onSubmit={(e) => submitForm(e)}>
       <div className="form-group">
         {JSON.stringify(form)}
-        {
-          loading?(
-            <h3>Loading...</h3>
-          ):
-          (
-            <img src={image} style={{width: '300px'}} />
-          )
-        }
+        {loading ? (
+          <h3>Loading...</h3>
+        ) : (
+          <img src={image} style={{ width: "300px" }} />
+        )}
         <br />
         <label htmlFor="name">Name</label>
         <input
@@ -196,7 +196,7 @@ const MovieCreateForm = (props) => {
           <option>action</option>
         </select>
       </div>
-      <button onClick={submitForm} type="button" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary">
         Create
       </button>
     </form>
