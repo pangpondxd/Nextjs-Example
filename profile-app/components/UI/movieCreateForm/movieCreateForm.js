@@ -5,15 +5,14 @@ const MovieCreateForm = (props) => {
     name: "",
     description: "",
     rating: "",
-    image: "",
-    cover: "",
     longDesc: "",
   });
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState("");
 
   const changedImageHandler = async (e) => {
-    const files = e.target.files;
+    const target = event.target;
+    const name = target.name;
+    const files = target.files;
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "movieDB");
@@ -26,9 +25,45 @@ const MovieCreateForm = (props) => {
         body: data,
       }
     );
-
     const file = await res.json();
-    console.log(file);
+    console.log(file.url)
+    let value = []
+    let image = target.image
+    image = file.url
+    value.push(image.value)
+    console.log(image)
+    setForm({
+      ...form,
+      [name]: target.value,
+      image: value.toString(),
+    });
+  };
+
+  const changedCoverHandler = async (e) => {
+    const target = event.target;
+    const name = target.name;
+    const files = target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "movieDB");
+    setLoading(true);
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/doumyycj0/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
+    let cover = target.cover
+    cover = file.url
+    console.log(cover)
+    setForm({
+      ...form,
+      [name]: target.value,
+      cover: target.value,
+    });
   };
 
   const changedHandler = (event) => {
@@ -109,7 +144,7 @@ const MovieCreateForm = (props) => {
         <label htmlFor="image">Image</label>
         <input
           value={form.image}
-          onChange={changedImageHandler}
+          onChange={ changedImageHandler}
           name="image"
           type="file"
           className="form-control"
@@ -121,7 +156,7 @@ const MovieCreateForm = (props) => {
         <label htmlFor="cover">Cover</label>
         <input
           value={form.cover}
-          onChange={changedImageHandler}
+          onChange={changedCoverHandler}
           name="cover"
           type="file"
           className="form-control"
