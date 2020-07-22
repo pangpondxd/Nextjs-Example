@@ -8,14 +8,17 @@ const MovieCreateForm = (props) => {
     longDesc: "",
   });
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState("")
 
-  const changedImageHandler = async (e) => {
+  const changedImageHandler = async (event) => {
     const target = event.target;
+    console.log("target = = = = = = =",target)
     const name = target.name;
-    const files = target.files;
+    const files = target.files[0];
     const data = new FormData();
-    data.append("file", files[0]);
+    data.append("file", files);
     data.append("upload_preset", "movieDB");
+    console.log("data ; ; ; ;", data)
     setLoading(true);
 
     const res = await fetch(
@@ -26,16 +29,13 @@ const MovieCreateForm = (props) => {
       }
     );
     const file = await res.json();
-    console.log(file.url)
-    let value = []
-    let image = target.image
-    image = file.url
-    value.push(image.value)
-    console.log(image)
+    console.log("file.url", file.url)
+    setImage(file.secure_url)
+    setLoading(false)
+    console.log("target ; ; ; ; ; ; ; ", )
     setForm({
-      ...form,
       [name]: target.value,
-      image: value.toString(),
+      image: target.value,
     });
   };
 
@@ -60,7 +60,6 @@ const MovieCreateForm = (props) => {
     cover = file.url
     console.log(cover)
     setForm({
-      ...form,
       [name]: target.value,
       cover: target.value,
     });
@@ -70,7 +69,6 @@ const MovieCreateForm = (props) => {
     const target = event.target;
     const name = target.name;
     setForm({
-      ...form,
       [name]: target.value,
     });
   };
@@ -85,20 +83,28 @@ const MovieCreateForm = (props) => {
       }
     }
     setForm({
-      ...form,
       genre: value.toString(),
     });
   };
 
   const submitForm = () => {
     // call here function to create movie from props
-    props.handleFormSubmit({ ...form });
+    props.handleFormSubmit({...form});
   };
 
   return (
     <form>
       <div className="form-group">
         {JSON.stringify(form)}
+        {
+          loading?(
+            <h3>Loading...</h3>
+          ):
+          (
+            <img src={image} style={{width: '300px'}} />
+          )
+        }
+        <br />
         <label htmlFor="name">Name</label>
         <input
           value={form.name}
@@ -143,12 +149,12 @@ const MovieCreateForm = (props) => {
       <div className="form-group">
         <label htmlFor="image">Image</label>
         <input
-          value={form.image}
-          onChange={ changedImageHandler}
-          name="image"
+          onChange={changedImageHandler}
+          name="file"
+          // ref="file"
           type="file"
           className="form-control"
-          id="image"
+          id="file"
           placeholder="http://....."
         />
       </div>

@@ -55,6 +55,7 @@ app.prepare().then(() => {
   server.post("/api/v1/movies", (req, res) => {
     //Todo add ID movie
     const movie = req.body
+    console.log(movie)
     moviesData.push(movie)
     const pathToFile = path.join(__dirname, filePath)
     const stringifiedData = JSON.stringify(moviesData, null, 2)
