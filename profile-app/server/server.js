@@ -4,7 +4,7 @@ const bodyParser = require("body-parser")
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const cloudinary = require('cloudinary').v2
+// const cloudinary = require('cloudinary').v2
 const filePath = './data.json'
 const fs = require('fs')
 const path = require('path')
@@ -12,11 +12,11 @@ const  moviesData = require(filePath)
 const fileupload = require('express-fileupload')
 
 
-cloudinary.config({
-  cloud_name: 'doumyycj0',
-  api_key: '392485679499865',
-  api_secret: 'G1H-ZkfoRQ_6VmdoibZWT8tw1Q8'
-})
+// cloudinary.config({
+//   cloud_name: 'doumyycj0',
+//   api_key: '392485679499865',
+//   api_secret: 'G1H-ZkfoRQ_6VmdoibZWT8tw1Q8'
+// })
 
 
 app.prepare().then(() => {
@@ -37,13 +37,13 @@ app.prepare().then(() => {
   return res.json(movie);
 });
 
-  server.post('/api/v1/upload', (req, res, next) => {
-    const file = req.files.photo
-    console.log(file)
-    cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-      res.json(result)
-    })
-  })
+  // server.post('/api/v1/upload', (req, res, next) => {
+  //   const file = req.files.photo
+  //   console.log(file)
+  //   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+  //     res.json(result)
+  //   })
+  // })
 
   // server.get('/api/v1/upload/:id', (req, res, next) => {
   //   const { public_id } = req.params

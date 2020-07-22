@@ -1,5 +1,4 @@
 import { useState } from "react";
-import {getPictureMovie} from '../../../actions/index'
 const MovieCreateForm = (props) => {
   //fixed uncontrolled data!
   const [form, setForm] = useState({
@@ -8,25 +7,36 @@ const MovieCreateForm = (props) => {
     rating: "",
     image: "",
     cover: "",
-    longDesc: ""
+    longDesc: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState("");
 
+  const changedImageHandler = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "movieDB");
+    setLoading(true);
 
-  const changedImageHandler = (event) => {
-    const target = event.target;
-    const name = target.name;
-    setForm({
-      ...form,
-      [name]: target.value
-    });
-  }
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/doumyycj0/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+
+    const file = await res.json();
+    console.log(file);
+  };
 
   const changedHandler = (event) => {
     const target = event.target;
     const name = target.name;
     setForm({
       ...form,
-      [name]: target.value
+      [name]: target.value,
     });
   };
 
@@ -47,13 +57,13 @@ const MovieCreateForm = (props) => {
 
   const submitForm = () => {
     // call here function to create movie from props
-    props.handleFormSubmit({...form})
-  }
+    props.handleFormSubmit({ ...form });
+  };
 
   return (
     <form>
       <div className="form-group">
-      {JSON.stringify(form)}
+        {JSON.stringify(form)}
         <label htmlFor="name">Name</label>
         <input
           value={form.name}
@@ -99,7 +109,7 @@ const MovieCreateForm = (props) => {
         <label htmlFor="image">Image</label>
         <input
           value={form.image}
-          onChange={() => changedImageHandler()}
+          onChange={changedImageHandler}
           name="image"
           type="file"
           className="form-control"
@@ -111,7 +121,7 @@ const MovieCreateForm = (props) => {
         <label htmlFor="cover">Cover</label>
         <input
           value={form.cover}
-          onChange={() => changedImageHandler()}
+          onChange={changedImageHandler}
           name="cover"
           type="file"
           className="form-control"
@@ -146,8 +156,8 @@ const MovieCreateForm = (props) => {
         </select>
       </div>
       <button onClick={submitForm} type="button" className="btn btn-primary">
-         Create
-        </button>
+        Create
+      </button>
     </form>
   );
 };
