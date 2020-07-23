@@ -56,7 +56,7 @@ app.prepare().then(() => {
  
 
   server.delete("/api/v1/movies/:id", (req, res) => {
-    const { id } = req.param
+    const { id } = req.params
     const movieIndex = moviesData.findIndex(m => m.id === id)
 
     moviesData.splice(movieIndex, 1)
@@ -68,6 +68,23 @@ app.prepare().then(() => {
         return res.status(422).send(err)
       }
       return res.json('Movie has been successfully deleted!')
+    })
+  });
+
+  server.patch("/api/v1/movies/:id", (req, res) => {
+    const { id } = req.params
+    const movie = req.body
+    const movieIndex = moviesData.findIndex(m => m.id === id)
+
+    moviesData[movieIndex] = movie
+
+    const pathToFile = path.join(__dirname, filePath)
+    const stringifiedData = JSON.stringify(moviesData, null, 2)
+    fs.writeFile(pathToFile, stringifiedData, (err) => {
+      if(err){
+        return res.status(422).send(err)
+      }
+      return res.json(movie)
     })
   });
 

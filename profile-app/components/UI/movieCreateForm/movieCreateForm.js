@@ -10,10 +10,7 @@ const MovieCreateForm = (props) => {
   const defaultData = {
     name: '',
     description: '',
-    releaseYear: '',
     rating: '',
-    image: '',
-    cover: '',
     longDesc: '',
   }
 
@@ -53,7 +50,7 @@ const MovieCreateForm = (props) => {
     setLoading(false)
   };
 
-  const changedCoverHandler = async (e) => {
+  const changedCoverHandler = async (event) => {
     const target = event.target;
     const files = target.files;
     const data = new FormData();
@@ -208,7 +205,7 @@ const MovieCreateForm = (props) => {
         </select>
       </div>
       <button type="submit" className="btn btn-primary">
-        Create
+        {props.submitButton || 'Create'}
       </button>
     </form>
   );
