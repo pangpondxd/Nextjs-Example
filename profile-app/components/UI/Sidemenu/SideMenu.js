@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {useRouter} from 'next/router'
 import Modal from '../Modal/Modal'
-import MovieCreateForm from '../movieCreateForm/movieCreateForm'
+import MovieCreateForm from '../MovieCreateForm/MovieCreateForm'
 import { createMovie } from '../../../actions/index'
 
 const SideMenu = (props) => {

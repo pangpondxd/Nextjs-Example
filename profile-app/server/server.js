@@ -37,20 +37,6 @@ app.prepare().then(() => {
   return res.json(movie);
 });
 
-  // server.post('/api/v1/upload', (req, res, next) => {
-  //   const file = req.files.photo
-  //   console.log(file)
-  //   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-  //     res.json(result)
-  //   })
-  // })
-
-  // server.get('/api/v1/upload/:id', (req, res, next) => {
-  //   const { public_id } = req.params
-  //   const movie = moviesData.find(m => m.id === public_id)
-  //   clo
-  // return res.json(movie);
-  // })
 
   server.post("/api/v1/movies", (req, res) => {
     //Todo add ID movie
@@ -81,9 +67,10 @@ app.prepare().then(() => {
       if(err){
         return res.status(422).send(err)
       }
-      return res.json('Movie has been successfully added!')
+      return res.json('Movie has been successfully deleted!')
     })
   });
+
 
   server.get("/faq", (req, res) => {
     return res.send(

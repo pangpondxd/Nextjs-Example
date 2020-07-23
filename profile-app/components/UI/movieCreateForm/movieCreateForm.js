@@ -1,15 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import React from 'react'
 const MovieCreateForm = (props) => {
   //fixed uncontrolled data!
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    rating: "",
-    longDesc: "",
-  });
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("")
   const [cover, setCover] = useState("")
+  const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false)
+
+  const defaultData = {
+    name: '',
+    description: '',
+    releaseYear: '',
+    rating: '',
+    image: '',
+    cover: '',
+    longDesc: '',
+  }
+
+  const formData = props.initialData ? {...props.initialData} : defaultData
+
+  const [form, setForm] = useState(formData)
+
+  
+  useEffect(() => {
+    if(props.initialData){
+      setForm(props.initialData)
+      setIsInitialDataLoaded(true)
+    }
+  }, [isInitialDataLoaded])
+
+
+
+
   const changedImageHandler = async (event) => {
     const target = event.target;
     const files = target.files[0];
@@ -29,7 +51,6 @@ const MovieCreateForm = (props) => {
     console.log("file.url", file.url)
     setImage(file.secure_url)
     setLoading(false)
-
   };
 
   const changedCoverHandler = async (e) => {
@@ -85,7 +106,7 @@ const MovieCreateForm = (props) => {
   return (
     <form onSubmit={(e) => submitForm(e)}>
       <div className="form-group">
-        {JSON.stringify(form)}
+        {/* {JSON.stringify(form)} */}
         {
           loading?(
             <h3>Loading...</h3>
@@ -139,9 +160,9 @@ const MovieCreateForm = (props) => {
       <div className="form-group">
         <label htmlFor="image">Image</label>
         <input
+          // value={form.image}
           onChange={changedImageHandler}
           name="file"
-          // ref="file"
           type="file"
           className="form-control"
           id="file"
@@ -151,6 +172,7 @@ const MovieCreateForm = (props) => {
       <div className="form-group">
         <label htmlFor="cover">Cover</label>
         <input
+          // value={form.cover}
           onChange={changedCoverHandler}
           name="cover"
           type="file"
