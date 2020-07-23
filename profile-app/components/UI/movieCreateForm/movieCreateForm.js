@@ -9,16 +9,13 @@ const MovieCreateForm = (props) => {
   });
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("")
-
+  const [cover, setCover] = useState("")
   const changedImageHandler = async (event) => {
     const target = event.target;
-    console.log("target = = = = = = =",target)
-    const name = target.name;
     const files = target.files[0];
     const data = new FormData();
     data.append("file", files);
     data.append("upload_preset", "movieDB");
-    console.log("data ; ; ; ;", data)
     setLoading(true);
 
     const res = await fetch(
@@ -32,16 +29,11 @@ const MovieCreateForm = (props) => {
     console.log("file.url", file.url)
     setImage(file.secure_url)
     setLoading(false)
-    console.log("target ; ; ; ; ; ; ; ", )
-    setForm({
-      [name]: target.value,
-      image: target.value,
-    });
+
   };
 
   const changedCoverHandler = async (e) => {
     const target = event.target;
-    const name = target.name;
     const files = target.files;
     const data = new FormData();
     data.append("file", files[0]);
@@ -56,19 +48,15 @@ const MovieCreateForm = (props) => {
       }
     );
     const file = await res.json();
-    let cover = target.cover
-    cover = file.url
-    console.log(cover)
-    setForm({
-      [name]: target.value,
-      cover: target.value,
-    });
+    setCover(file.secure_url)
+    setLoading(false)
   };
 
   const changedHandler = (event) => {
     const target = event.target;
     const name = target.name;
     setForm({
+      ...form,
       [name]: target.value,
     });
   };
@@ -83,17 +71,19 @@ const MovieCreateForm = (props) => {
       }
     }
     setForm({
+      ...form,
       genre: value.toString(),
     });
   };
 
-  const submitForm = () => {
+  const submitForm = (e) => {
+    e.preventDefault();
     // call here function to create movie from props
-    props.handleFormSubmit({...form});
+    props.handleFormSubmit({...form, image:image, cover: cover});
   };
 
   return (
-    <form>
+    <form onSubmit={(e) => submitForm(e)}>
       <div className="form-group">
         {JSON.stringify(form)}
         {
@@ -161,7 +151,6 @@ const MovieCreateForm = (props) => {
       <div className="form-group">
         <label htmlFor="cover">Cover</label>
         <input
-          value={form.cover}
           onChange={changedCoverHandler}
           name="cover"
           type="file"
@@ -196,7 +185,7 @@ const MovieCreateForm = (props) => {
           <option>action</option>
         </select>
       </div>
-      <button onClick={submitForm} type="button" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary">
         Create
       </button>
     </form>
