@@ -5,11 +5,20 @@ import { getMovies, getCategories } from "../actions/index";
 import React, { useState, useEffect } from "react";
 const Home = (props) => {
   const {images, categories, movies} = props
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState('all')
 
 
   const categoryChangedHandler = category => {
     setFilter(category)
+  }
+
+  const filterMovies = movies => {
+    if(filter === 'all'){
+      return movies
+    }
+    return movies.filter((m) => {
+      return m.genre && m.genre.includes(filter)
+    })
   }
 
 
@@ -29,9 +38,9 @@ const Home = (props) => {
 
             <div className="col-lg-9">
               <Carousel images={images} />
-              <h1>{filter === '' ? 'All' : filter} movies</h1>
+              <h1>{filter} movies</h1>
               <div className="row">
-                <Movielist movies={movies || []} />
+                <Movielist movies={filterMovies(movies) || []} />
               </div>
             </div>
           </div>
