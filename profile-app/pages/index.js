@@ -5,6 +5,14 @@ import { getMovies, getCategories } from "../actions/index";
 import React, { useState, useEffect } from "react";
 const Home = (props) => {
   const {images, categories, movies} = props
+  const [filter, setFilter] = useState('')
+
+
+  const categoryChangedHandler = category => {
+    setFilter(category)
+  }
+
+
   return (
     <div>
       <div className="home-page">
@@ -12,6 +20,8 @@ const Home = (props) => {
           <div className="row">
             <div className="col-lg-3">
               <SideMenu 
+                categoryChangedHandler={categoryChangedHandler}
+                activeCategory={filter}
                 appName={"Movie DB"} 
                 categories={categories}
               />
@@ -19,6 +29,7 @@ const Home = (props) => {
 
             <div className="col-lg-9">
               <Carousel images={images} />
+              <h1>{filter === '' ? 'All' : filter} movies</h1>
               <div className="row">
                 <Movielist movies={movies || []} />
               </div>
