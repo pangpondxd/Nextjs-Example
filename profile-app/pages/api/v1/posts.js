@@ -1,9 +1,20 @@
 import axios from 'axios'
 
-const Posts = async (req,res) => {
-    const respon = await axios.get('https://jsonplaceholder.typicode.com/todos/')
-    const posts = respon.data
-    return (posts)
+export default async (req,res) => {
+
+    if(req.method === 'POST'){
+        const postData = req.body
+        console.log(postData)
+
+        return res.json({
+            status: 'Saveing Post to DB',
+            ...postData
+        })
+    }else{
+        
+    const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    const posts = response.data
+    return res.json(posts)
+    }
 }
 
-export default Posts

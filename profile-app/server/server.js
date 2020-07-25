@@ -37,7 +37,6 @@ app.prepare().then(() => {
   return res.json(movie);
 });
 
-
   server.post("/api/v1/movies", (req, res) => {
     //Todo add ID movie
     const movie = req.body
@@ -99,6 +98,10 @@ app.prepare().then(() => {
     // next.js is handling requests and providing pages where we are navigating to
     return handle(req, res);
   });
+
+  server.post("*", (req,res) => {
+    return handle(req, res)
+  })
 
   const PORT = process.env.PORT || 3000;
 

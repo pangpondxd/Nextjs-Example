@@ -28,6 +28,10 @@ import axios from 'axios'
   //   return await axios.post(`${BASE_URL}/api/v1/upload`).then(res => res.data)
   // }
 
+  export const getPosts = () => {
+    return axios.get(`${BASE_URL}/api/v1/posts`).then(res => res.data)
+  }
+
   export const getMovies =  () => {
       // return new Promise((resolve, reject) => {
       //   setTimeout(() => {
