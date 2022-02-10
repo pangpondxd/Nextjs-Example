@@ -16,7 +16,7 @@
     "express-fileupload": "^1.1.7-alpha.3",
     "fs": "0.0.1-security",
     "next": "9.4.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "nodemon": "^2.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1"
